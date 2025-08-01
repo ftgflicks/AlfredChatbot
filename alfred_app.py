@@ -9,7 +9,9 @@ import pyttsx3
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
 # Configure API key
-api_key = os.environ.get("GOOGLE_CLOUD_PROJECT")
+
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+
 genai.configure(api_key=api_key)
 
 # Create the model
