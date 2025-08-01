@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 import time
-import pyttsx3
+import streamlit.components.v1 as components
 
 # Set page config
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
@@ -29,7 +29,7 @@ model = genai.GenerativeModel(
     """
 )
 
-# Per-user session state (this is already private per user)
+# Per-user session state
 if "history" not in st.session_state:
     st.session_state.history = []
 
@@ -43,16 +43,19 @@ st.markdown("_Talk to Alfred, your academic, fitness, and relationship assistant
 # Voice output toggle
 enable_voice = st.checkbox("🔊 Enable Alfred's voice (British accent)")
 
-# Text-to-speech function
-def speak_text(text):
-    engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
-    for voice in voices:
-        if 'english' in voice.name.lower() and 'uk' in voice.name.lower():
-            engine.setProperty('voice', voice.id)
-            break
-    engine.say(text)
-    engine.runAndWait()
+# JavaScript text-to-speech (browser-based)
+def browser_tts(text):
+    escaped = text.replace("'", "\\'").replace("\n", " ").replace('"', '\\"')
+    components.html(f"""
+        <script>
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = "{escaped}";
+        msg.lang = 'en-GB';
+        msg.rate = 1;
+        msg.pitch = 1;
+        window.speechSynthesis.speak(msg);
+        </script>
+    """, height=0)
 
 # Chat display
 chat_container = st.container()
@@ -83,9 +86,9 @@ if submitted and user_input.strip():
                 response_container.markdown(f"**Alfred:** {display_text}")
                 time.sleep(0.015)
 
-        # Speak response
+        # Speak using browser TTS
         if enable_voice:
-            speak_text(model_response)
+            browser_tts(model_response)
 
         st.session_state.history.append({'role': 'model', 'parts': [model_response]})
         st.rerun()
