@@ -2,12 +2,12 @@
     {
         "role": "user",
         "parts": [
-            "UM HI"
+            "HI"
         ]
-    }  {
+    },
+    {
         "role": "model",
         "parts": [
             "Good day, Mr. Bruce. How may Alfred be of service to you today?\n"
         ]
     }
-]
