@@ -12,7 +12,6 @@ st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
-genai.configure(api_key=api_key)
 
 # Create the model
 generation_config = {
