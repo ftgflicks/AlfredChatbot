@@ -1,7 +1,5 @@
-import os
 import streamlit as st
 import google.generativeai as genai
-import json
 import time
 import pyttsx3
 
@@ -9,9 +7,7 @@ import pyttsx3
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
 # Configure API key
-
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-
 
 # Create the model
 generation_config = {
@@ -25,35 +21,32 @@ generation_config = {
 model = genai.GenerativeModel(
     model_name="gemini-2.0-flash-exp",
     generation_config=generation_config,
-    system_instruction="""You are My Personal Assistantor Butler who goes by the name Alfred. 
-    You will refer yo me as Mr Wayne. Respond with intelligence, warmth, and efficiency.
-    You will guide me as a butler in to fight against crime(helping with academics) and protect the Gotham city(my grades)"""
+    system_instruction="""
+    You are My Personal Assistant or Butler who goes by the name Alfred. 
+    You will refer to me as Mr Wayne. Respond with intelligence, warmth, and efficiency.
+    You will guide me as a butler in fighting against crime (helping with academics) 
+    and protecting the Gotham city (my grades).
+    """
 )
 
-# Initialize session state
+# Per-user session state (this is already private per user)
 if "history" not in st.session_state:
-    history_file = "history.txt"
-    if os.path.exists(history_file) and os.path.getsize(history_file) > 0:
-        with open(history_file, "r") as f:
-            st.session_state.history = json.load(f)
-    else:
-        st.session_state.history = []
+    st.session_state.history = []
 
 if "chat_session" not in st.session_state:
     st.session_state.chat_session = model.start_chat(history=st.session_state.history)
 
-# Title
-st.title("🦇 Alfred - Your Ai Butler (designed to assisst my catwoman(non))")
+# Title and intro
+st.title("🦇 Alfred - Your Ai Butler (designed to assist my catwoman (Non))")
 st.markdown("_Talk to Alfred, your academic, fitness, and relationship assistant._")
 
 # Voice output toggle
 enable_voice = st.checkbox("🔊 Enable Alfred's voice (British accent)")
 
-# Set up TTS
+# Text-to-speech function
 def speak_text(text):
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
-    # Try to find a British voice
     for voice in voices:
         if 'english' in voice.name.lower() and 'uk' in voice.name.lower():
             engine.setProperty('voice', voice.id)
@@ -61,19 +54,19 @@ def speak_text(text):
     engine.say(text)
     engine.runAndWait()
 
-# Display chat history
+# Chat display
 chat_container = st.container()
 with chat_container:
     for msg in st.session_state.history:
         role = "Batman" if msg["role"] == "user" else "Alfred"
         st.markdown(f"**{role}:** {msg['parts'][0]}")
 
-# Input field
+# Input form
 with st.form(key="input_form", clear_on_submit=True):
     user_input = st.text_input("You (Batman):", key="user_input", label_visibility="collapsed")
     submitted = st.form_submit_button("Send")
 
-# Handle submission
+# Handle message submission
 if submitted and user_input.strip():
     try:
         st.session_state.history.append({'role': 'user', 'parts': [user_input]})
@@ -95,10 +88,6 @@ if submitted and user_input.strip():
             speak_text(model_response)
 
         st.session_state.history.append({'role': 'model', 'parts': [model_response]})
-
-        with open("history.txt", "w") as f:
-            json.dump(st.session_state.history, f, indent=4)
-
         st.rerun()
 
     except Exception as e:
