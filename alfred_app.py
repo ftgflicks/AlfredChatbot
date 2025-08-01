@@ -41,7 +41,15 @@ st.title("🦇 Alfred - Your Ai Butler (designed to assist my catwoman (Non))")
 st.markdown("_Talk to Alfred, your academic, fitness, and relationship assistant._")
 
 # Voice output toggle
+# Voice output toggle
 enable_voice = st.checkbox("🔊 Enable Alfred's voice (British accent)")
+
+# Chat reset button
+if st.button("🗑️ Reset Chat"):
+    st.session_state.history = []
+    st.session_state.chat_session = model.start_chat(history=[])
+    st.rerun()
+
 
 # JavaScript text-to-speech (browser-based)
 def browser_tts(text):
