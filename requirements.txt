@@ -1,2 +1,5 @@
 streamlit
 google-generativeai
+pyttsx3
+pyaudio
+speechrecognition
