@@ -8,7 +8,7 @@ st.markdown("""
     <style>
         .user-bubble {
             background-color: #EDE8D0;
-            color: black;
+            color: beige;
             padding: 10px 15px;
             border-radius: 18px;
             max-width: 80%;
