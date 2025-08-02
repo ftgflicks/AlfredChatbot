@@ -125,7 +125,7 @@ with chat_container:
 
 # Input form
 with st.form(key="input_form", clear_on_submit=True):
-    user_input = st.text_area("Your Prompt:", height=100, placeholder="Ask Alfred something...")
+    user_input = st.text_area("Your Prompt:", height=60, placeholder="Ask Alfred something...")
     submitted = st.form_submit_button("Send")
 
 # Handle message submission
