@@ -6,15 +6,50 @@ import streamlit.components.v1 as components
 st.set_page_config(layout="wide")
 st.markdown("""
     <style>
+        /* Full dark background */
+        html, body, [data-testid="stApp"] {
+            background-color: #0e1117 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Main block */
         .block-container {
-            padding-top: 2rem;
-            padding-bottom: 0rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            background-color: #0e1117 !important;
+            padding: 2rem 1rem;
             max-width: 100% !important;
+        }
+
+        /* Chat input */
+        input[type="text"], textarea {
+            background-color: #1c1f26 !important;
+            color: white !important;
+            border: 1px solid #333 !important;
+        }
+
+        /* Checkbox & buttons */
+        .stCheckbox > label, .stButton > button {
+            background-color: #1c1f26 !important;
+            color: white !important;
+            border: 1px solid #333 !important;
+        }
+
+        /* Form and widget container */
+        [data-testid="stForm"] {
+            background-color: #0e1117 !important;
+        }
+
+        /* Markdown text */
+        .markdown-text-container {
+            color: white !important;
+        }
+
+        /* Sidebar */
+        section[data-testid="stSidebar"] {
+            background-color: #161a1e !important;
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 
