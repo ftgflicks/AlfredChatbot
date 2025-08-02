@@ -6,6 +6,38 @@ import streamlit.components.v1 as components
 
 
 
+st.markdown("""
+    <style>
+        /* Force background to dark */
+        body, .main, .block-container {
+            background-color: #0e1117 !important;
+            color: white !important;
+        }
+
+        /* Sidebar background */
+        section[data-testid="stSidebar"] {
+            background-color: #161a1e !important;
+        }
+
+        /* Input fields, text boxes */
+        .stTextInput, .stTextArea, .stSelectbox, .stButton > button {
+            background-color: #20252b !important;
+            color: white !important;
+        }
+
+        /* Adjust labels and headers */
+        label, h1, h2, h3, h4, h5, h6, p, span {
+            color: white !important;
+        }
+
+        /* Button tweaks */
+        .stButton > button {
+            border-color: white !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # Set page config
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
