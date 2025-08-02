@@ -4,22 +4,6 @@ import time
 import streamlit.components.v1 as components
 
 
-# Sticky Batman Logo in Corner
-st.markdown("""
-      <style>
-    .bat-logo {
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        width: 60px;
-        height: 40px;
-
-        opacity: 1.0;
-        z-index: 9999;
-    }
-    </style>
-    <img class="background-logo" src="https://i.postimg.cc/Zq7SXVKn/download.png">
-""", unsafe_allow_html=True)
 
 
 # Set page config
