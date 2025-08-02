@@ -79,14 +79,17 @@ def browser_tts(text):
     escaped = text.replace("'", "\\'").replace("\n", " ").replace('"', '\\"')
     components.html(f"""
         <script>
-        var msg = new SpeechSynthesisUtterance();
-        msg.text = "{escaped}";
+        var voices = window.speechSynthesis.getVoices();
+        var preferredVoice = voices.find(v => v.name.includes("Google UK English Male")) || voices.find(v => v.lang === 'en-GB');
+        var msg = new SpeechSynthesisUtterance("{escaped}");
+        msg.voice = preferredVoice;
         msg.lang = 'en-GB';
         msg.rate = 1;
         msg.pitch = 1;
         window.speechSynthesis.speak(msg);
         </script>
     """, height=0)
+
 
 # Chat display
 chat_container = st.container()
