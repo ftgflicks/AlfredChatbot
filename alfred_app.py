@@ -151,18 +151,10 @@ def browser_tts(text):
 
 # Chat display
 chat_container = st.container()
-# Typing animation for model response (but skip duplicate plain text)
 with chat_container:
-    st.markdown(f'<div class="user-bubble">{user_input}</div>', unsafe_allow_html=True)
-    display_text = ""
-    response_container = st.empty()
-    for char in model_response:
-        display_text += char
-        response_container.markdown(
-            f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
-        )
-        time.sleep(0.015)
-
+    for msg in st.session_state.history:
+        role = "Batman" if msg["role"] == "user" else "Alfred"
+        st.markdown(f"**{role}:** {msg['parts'][0]}")
 
 # Input form
 with st.form(key="input_form", clear_on_submit=True):
@@ -177,14 +169,18 @@ if submitted and user_input.strip():
         model_response = response.text
 
         # Typing animation
-        with chat_container:
-            st.markdown(f"**Batman:** {user_input}")
-            display_text = ""
-            response_container = st.empty()
-            for char in model_response:
-                display_text += char
-                response_container.markdown(f"**Alfred:** {display_text}")
-                time.sleep(0.015)
+       # Typing animation for model response (but skip duplicate plain text)
+with chat_container:
+    st.markdown(f'<div class="user-bubble">{user_input}</div>', unsafe_allow_html=True)
+    display_text = ""
+    response_container = st.empty()
+    for char in model_response:
+        display_text += char
+        response_container.markdown(
+            f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
+        )
+        time.sleep(0.015)
+
 
         # Speak using browser TTS
         if enable_voice:
