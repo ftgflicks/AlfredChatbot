@@ -9,8 +9,8 @@ st.markdown("""
       <style>
     .bat-logo {
         position: fixed;
-        top: 10px;
-        left: 10px;
+        top: 0px;
+        left: 0px;
         width: 10px;
         opacity: 1.0;
         z-index: 9999;
