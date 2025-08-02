@@ -151,13 +151,17 @@ def browser_tts(text):
 
 # Chat display
 chat_container = st.container()
+# Typing animation for model response (but skip duplicate plain text)
 with chat_container:
-  with st.chat_message("assistant"):
-    response = ""
-    for chunk in response_generator:
-        content = chunk.get("text", "")
-        response += content
-        # st.markdown(content)  # Disable this to prevent double display
+    st.markdown(f'<div class="user-bubble">{user_input}</div>', unsafe_allow_html=True)
+    display_text = ""
+    response_container = st.empty()
+    for char in model_response:
+        display_text += char
+        response_container.markdown(
+            f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
+        )
+        time.sleep(0.015)
 
 
 # Input form
