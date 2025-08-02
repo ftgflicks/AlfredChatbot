@@ -121,11 +121,6 @@ if "chat_session" not in st.session_state:
 # Title and intro
 st.title("🦇 Alfred - Your Ai Butler")
 st.markdown("_Designed To Assist My CatWoman(non)._")
-with st.container():
-    st.markdown(f'<div class="chat-container">', unsafe_allow_html=True)
-    st.markdown(f'<div class="chat-bubble-user">{user_input}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="chat-bubble-bot">{response}</div>', unsafe_allow_html=True)
-    st.markdown(f'</div>', unsafe_allow_html=True)
 
 # Voice output toggle
 # Voice output toggle
@@ -157,9 +152,11 @@ def browser_tts(text):
 # Chat display
 chat_container = st.container()
 with chat_container:
-    for msg in st.session_state.history:
-        role = "Batman" if msg["role"] == "user" else "Alfred"
-        st.markdown(f"**{role}:** {msg['parts'][0]}")
+  for msg in st.session_state.history:
+    if msg["role"] == "user":
+        st.markdown(f'<div class="user-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
 
 # Input form
 with st.form(key="input_form", clear_on_submit=True):
