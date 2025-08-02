@@ -3,6 +3,22 @@ import google.generativeai as genai
 import time
 import streamlit.components.v1 as components
 
+
+# Sticky Batman Logo in Corner
+st.markdown("""
+    <style>
+    .bat-logo {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 60px;
+        z-index: 9999;
+        opacity: 0.85;
+    }
+    </style>
+    <img class="bat-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Batman_Logo.svg/2048px-Batman_Logo.svg.png">
+""", unsafe_allow_html=True)
+
 # Set page config
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
