@@ -9,7 +9,7 @@ import streamlit.components.v1 as components
 st.markdown("""
     <style>
         .user-bubble {
-            background-color: #DCF8C6;
+            background-color: ##e7f8c6;
             color: black;
             padding: 10px 15px;
             border-radius: 18px;
@@ -20,8 +20,8 @@ st.markdown("""
             font-family: Arial, sans-serif;
         }
         .alfred-bubble {
-            background-color: #2F3136;
-            color: white;
+            background-color: #EDE8D0;
+            color: black;
             padding: 10px 15px;
             border-radius: 18px;
             max-width: 80%;
