@@ -153,8 +153,11 @@ def browser_tts(text):
 chat_container = st.container()
 with chat_container:
     for msg in st.session_state.history:
-        role = "Batman" if msg["role"] == "user" else "Alfred"
-        st.markdown(f"**{role}:** {msg['parts'][0]}")
+        if msg["role"] == "user":
+            st.markdown(f'<div class="user-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
+
 
 # Input form
 with st.form(key="input_form", clear_on_submit=True):
@@ -165,21 +168,30 @@ with st.form(key="input_form", clear_on_submit=True):
 if submitted and user_input.strip():
     try:
         st.session_state.history.append({'role': 'user', 'parts': [user_input]})
-        response = st.session_state.chat_session.send_message(user_input)
-        model_response = response.text
-
-        # Typing animation
-        # Typing animation for model response (but skip duplicate plain text)
+       # Append user message to history
+        st.session_state.history.append({'role': 'user', 'parts': [user_input]})
+        
+        # Show user's message bubble immediately
         with chat_container:
             st.markdown(f'<div class="user-bubble">{user_input}</div>', unsafe_allow_html=True)
-            display_text = ""
-            response_container = st.empty()
-            for char in model_response:
-                display_text += char
-                response_container.markdown(
-                    f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
-                )
-                time.sleep(0.015)
+        
+        # Get model response
+        response = st.session_state.chat_session.send_message(user_input)
+        model_response = response.text
+        
+        # Typing animation inside a bubble
+        display_text = ""
+        response_container = chat_container.empty()
+        for char in model_response:
+            display_text += char
+            response_container.markdown(
+                f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
+            )
+            time.sleep(0.015)
+        
+        # Add full model response to history
+        st.session_state.history.append({'role': 'model', 'parts': [model_response]})
+        
 
         # Speak using browser TTS
         if enable_voice:
