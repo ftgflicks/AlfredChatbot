@@ -154,9 +154,12 @@ chat_container = st.container()
 with chat_container:
     for msg in st.session_state.history:
         if msg["role"] == "user":
+            st.markdown('<div class="bubble-header">You:</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="user-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
         else:
+            st.markdown('<div class="bubble-header">Alfred:</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
+
 
 
 # Input form
