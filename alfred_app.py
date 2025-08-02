@@ -7,17 +7,20 @@ import streamlit.components.v1 as components
 # Sticky Batman Logo in Corner
 st.markdown("""
     <style>
-    .bat-logo {
+    .background-logo {
         position: fixed;
-        top: 20px;
-        left: 20px;
-        width: 60px;
-        z-index: 9999;
-        opacity: 0.85;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        opacity: 0.05;
+        z-index: 0;
+        pointer-events: none;
     }
     </style>
-    <img class="bat-logo" src="https://i.postimg.cc/Zq7SXVKn/download.png">
+    <img class="background-logo" src="https://i.postimg.cc/Zq7SXVKn/download.png">
 """, unsafe_allow_html=True)
+
 
 # Set page config
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
