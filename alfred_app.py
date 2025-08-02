@@ -5,6 +5,21 @@ import streamlit.components.v1 as components
 
 
 
+st.markdown("""
+    <style>
+    .background-logo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        opacity: 0.05;
+        z-index: 0;
+        pointer-events: none;
+    }
+    </style>
+    <img class="background-logo" src="https://i.postimg.cc/5NK7LT0s/download.jpg">
+""", unsafe_allow_html=True)
 
 
 # Set page config
