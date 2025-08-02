@@ -16,7 +16,8 @@ st.markdown("""
         opacity: 0.85;
     }
     </style>
-    <img class="bat-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Batman_Logo.svg/2048px-Batman_Logo.svg.png">
+    <img class="bat-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Batman_Logo.svg/2048px-Batman_Logo.svg.png
+">
 """, unsafe_allow_html=True)
 
 # Set page config
