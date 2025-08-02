@@ -76,19 +76,18 @@ if st.button("🗑️ Reset Chat"):
 
 # JavaScript text-to-speech (browser-based)
 def browser_tts(text):
-    escaped = text.replace("'", "\\'").replace("\n", " ").replace('"', '\\"')
+    import html
+    escaped = html.escape(text).replace("\n", " ")
     components.html(f"""
         <script>
-        var voices = window.speechSynthesis.getVoices();
-        var preferredVoice = voices.find(v => v.name.includes("Google UK English Male")) || voices.find(v => v.lang === 'en-GB');
-        var msg = new SpeechSynthesisUtterance("{escaped}");
-        msg.voice = preferredVoice;
+        const msg = new SpeechSynthesisUtterance("{escaped}");
         msg.lang = 'en-GB';
         msg.rate = 1;
-        msg.pitch = 1;
+        msg.pitch = 1.2;
         window.speechSynthesis.speak(msg);
         </script>
     """, height=0)
+
 
 
 # Chat display
