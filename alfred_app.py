@@ -167,8 +167,7 @@ with st.form(key="input_form", clear_on_submit=True):
 # Handle message submission
 if submitted and user_input.strip():
     try:
-        st.session_state.history.append({'role': 'user', 'parts': [user_input]})
-       # Append user message to history
+        # Append user message to history
         st.session_state.history.append({'role': 'user', 'parts': [user_input]})
         
         # Show user's message bubble immediately
@@ -179,26 +178,27 @@ if submitted and user_input.strip():
         response = st.session_state.chat_session.send_message(user_input)
         model_response = response.text
         
-        # Typing animation inside a bubble
+        # Typing animation inside a persistent bubble container
         display_text = ""
-        response_container = chat_container.empty()
-        for char in model_response:
-            display_text += char
-            response_container.markdown(
-                f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
-            )
-            time.sleep(0.015)
-        
+        with chat_container:
+            bubble = st.empty()
+            for char in model_response:
+                display_text += char
+                bubble.markdown(
+                    f'<div class="alfred-bubble">{display_text}</div>',
+                    unsafe_allow_html=True
+                )
+                time.sleep(0.015)
+
         # Add full model response to history
         st.session_state.history.append({'role': 'model', 'parts': [model_response]})
-        
 
         # Speak using browser TTS
         if enable_voice:
             browser_tts(model_response)
 
-        st.session_state.history.append({'role': 'model', 'parts': [model_response]})
         st.rerun()
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
