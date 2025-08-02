@@ -169,18 +169,7 @@ if submitted and user_input.strip():
         model_response = response.text
 
         # Typing animation
-        # Typing animation for model response (but skip duplicate plain text)
         with chat_container:
-            st.markdown(f'<div class="user-bubble">{user_input}</div>', unsafe_allow_html=True)
-            display_text = ""
-            response_container = st.empty()
-            for char in model_response:
-                display_text += char
-                response_container.markdown(
-                    f'<div class="alfred-bubble">{display_text}</div>', unsafe_allow_html=True
-                )
-                time.sleep(0.015)
-with chat_container:
             st.markdown(f"**Batman:** {user_input}")
             display_text = ""
             response_container = st.empty()
