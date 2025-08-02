@@ -13,7 +13,7 @@ st.markdown("""
         left: 50%;
         transform: translate(-50%, -50%);
         width: 300px;
-        opacity: 0.05;
+        opacity: 0.09;
         z-index: 0;
         pointer-events: none;
     }
