@@ -11,7 +11,7 @@ st.markdown("""
         position: fixed;
         top: 10px;
         left: 10px;
-        width: 100px;
+        width: 10px;
         opacity: 1.0;
         z-index: 9999;
     }
