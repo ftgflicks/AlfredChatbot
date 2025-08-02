@@ -58,7 +58,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Page config
-st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🧇")
+st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
 # Google API setup
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
@@ -93,7 +93,7 @@ if "chat_session" not in st.session_state:
     st.session_state.chat_session = model.start_chat(history=st.session_state.history)
 
 # Header
-st.title("🧇 Alfred - Your Ai Butler")
+st.title("🦇 Alfred - Your Ai Butler")
 st.markdown("_Designed To Assist My CatWoman(non)._")
 
 # Voice toggle and reset
