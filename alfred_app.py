@@ -121,6 +121,11 @@ if "chat_session" not in st.session_state:
 # Title and intro
 st.title("🦇 Alfred - Your Ai Butler")
 st.markdown("_Designed To Assist My CatWoman(non)._")
+with st.container():
+    st.markdown(f'<div class="chat-container">', unsafe_allow_html=True)
+    st.markdown(f'<div class="chat-bubble-user">{user_input}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="chat-bubble-bot">{response}</div>', unsafe_allow_html=True)
+    st.markdown(f'</div>', unsafe_allow_html=True)
 
 # Voice output toggle
 # Voice output toggle
