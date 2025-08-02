@@ -42,8 +42,7 @@ if "chat_session" not in st.session_state:
 
 # Title and intro
 st.title("🦇 Alfred - Your Ai Butler (designed to assist my catwoman (Non))")
-st.markdown("_Talk to Alfred, your academic, fitness, and relationship assistant
-(Created By Astro)._")
+st.markdown("_Talk to Alfred, your academic, fitness, and relationship assistant.(Created By Astro)_")
 
 # Voice output toggle
 # Voice output toggle
