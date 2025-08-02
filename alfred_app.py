@@ -8,7 +8,7 @@ st.markdown("""
     <style>
         .user-bubble {
             background-color: #EDE8D0;
-            color: beige;
+            color: black;
             padding: 10px 15px;
             border-radius: 18px;
             max-width: 80%;
@@ -18,8 +18,8 @@ st.markdown("""
             font-family: Arial, sans-serif;
         }
         .alfred-bubble {
-            background-color: #2F3136;
-            color: white;
+            background-color: #EDE8D0;
+            color: black;
             padding: 10px 15px;
             border-radius: 18px;
             max-width: 80%;
