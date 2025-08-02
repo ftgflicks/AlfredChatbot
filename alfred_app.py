@@ -4,6 +4,17 @@ import time
 import streamlit.components.v1 as components
 
 st.set_page_config(layout="wide")
+st.markdown("""
+    <style>
+        .block-container {
+            padding-top: 2rem;
+            padding-bottom: 0rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            max-width: 100% !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 
 
