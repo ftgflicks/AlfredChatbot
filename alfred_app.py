@@ -152,11 +152,13 @@ def browser_tts(text):
 # Chat display
 chat_container = st.container()
 with chat_container:
-  for msg in st.session_state.history:
-    if msg["role"] == "user":
-        st.markdown(f'<div class="user-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
-    else:
-        st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
+  with st.chat_message("assistant"):
+    response = ""
+    for chunk in response_generator:
+        content = chunk.get("text", "")
+        response += content
+        # st.markdown(content)  # Disable this to prevent double display
+
 
 # Input form
 with st.form(key="input_form", clear_on_submit=True):
