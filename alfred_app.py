@@ -9,7 +9,7 @@ import streamlit.components.v1 as components
 st.markdown("""
     <style>
         .user-bubble {
-            background-color: ##e7f8c6;
+            background-color: #610787;
             color: black;
             padding: 10px 15px;
             border-radius: 18px;
