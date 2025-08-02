@@ -3,6 +3,32 @@ import google.generativeai as genai
 import time
 import streamlit.components.v1 as components
 
+st.markdown("""
+    <style>
+    /* Light rounded and padded input */
+    textarea, input[type="text"] {
+        border-radius: 1rem !important;
+        padding: 0.75rem !important;
+        border: 1px solid #ccc !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 1rem !important;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* On focus: a soft border color and slight glow */
+    textarea:focus, input[type="text"]:focus {
+        border: 1px solid #5b9bd5 !important;
+        box-shadow: 0 0 8px rgba(91, 155, 213, 0.3) !important;
+    }
+
+    /* Optional: placeholder color */
+    textarea::placeholder, input[type="text"]::placeholder {
+        color: #888 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 
 st.markdown("""
