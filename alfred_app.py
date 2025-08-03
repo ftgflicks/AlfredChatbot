@@ -99,7 +99,7 @@ if "chat_session" not in st.session_state:
     st.session_state.chat_session = model.start_chat(history=st.session_state.history)
 
 # --- Title & Header ---
-st.title("🧇 Alfred - Your Ai Butler")
+st.title("🦇 Alfred - Your Ai Butler")
 st.markdown("_Designed To Assist My CatWoman(non)._")
 
 # --- Voice Toggle ---
@@ -196,4 +196,5 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
