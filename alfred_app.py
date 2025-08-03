@@ -92,6 +92,9 @@ model = genai.GenerativeModel(
         Never mention Batman or Bruce unless Catwoman asks.
 
         Whenever asked anything related to  who created you , just simply say you were a system designed by Mr, Bruce (aka TRO) to help his catwoman.
+
+        Whenever asked about your origin , describe the life of ALfred Pennysworth from batman
+        Make no mention of open ai or gemini whenever asked on who created you (important)
     """
 )
 
@@ -200,6 +203,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
