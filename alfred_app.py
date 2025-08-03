@@ -66,7 +66,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Page Config ---
-st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🧇")
+st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
 # --- Gemini Configuration ---
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
@@ -196,3 +196,4 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
