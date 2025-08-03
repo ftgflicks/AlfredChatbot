@@ -7,6 +7,10 @@ import uuid
 import os
 import base64
 import edge_tts
+import nest_asyncio  # ✅ NEW IMPORT
+
+nest_asyncio.apply()  # ✅ ENSURE NESTED EVENT LOOP WORKS
+
 
 # --- Styles ---
 
@@ -142,11 +146,19 @@ def play_audio(file_path):
 
 def edge_tts(text, voice="en-GB-RyanNeural"):
     try:
-        filename = asyncio.run(generate_edge_tts(text, voice))
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            task = loop.create_task(generate_edge_tts(text, voice))
+            filename = loop.run_until_complete(task)
+        else:
+            filename = loop.run_until_complete(generate_edge_tts(text, voice))
+
         play_audio(filename)
         os.remove(filename)
+
     except Exception as e:
         st.warning(f"TTS failed: {e}")
+
 
 # --- Chat Display ---
 chat_container = st.container()
@@ -219,3 +231,4 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
