@@ -2,17 +2,11 @@ import streamlit as st
 import google.generativeai as genai
 import time
 import streamlit.components.v1 as components
-import asyncio
-import uuid
-import os
-import base64
-import edge_tts
-import nest_asyncio  # ✅ NEW IMPORT
-
-nest_asyncio.apply()  # ✅ ENSURE NESTED EVENT LOOP WORKS
-
 
 # --- Styles ---
+
+
+
 
 st.markdown("""
     <style>
@@ -28,6 +22,8 @@ st.markdown("""
             font-family: Arial, sans-serif;
         }
         .alfred-bubble {
+
+
             background-color: #EDE8D0;
             color: black;
             padding: 10px 15px;
@@ -126,39 +122,19 @@ if st.button("🗑️ Reset Chat"):
     st.session_state.chat_session = model.start_chat(history=[])
     st.rerun()
 
-# --- Edge TTS Functions ---
-async def generate_edge_tts(text, voice="en-GB-RyanNeural", rate="-10%", pitch="-5Hz"):
-    filename = f"/tmp/tts_{uuid.uuid4()}.mp3"
-    communicate = edge_tts.Communicate(text, voice=voice, rate=rate, pitch=pitch)
-    await communicate.save(filename)
-    return filename
-
-def play_audio(file_path):
-    with open(file_path, "rb") as audio_file:
-        audio_bytes = audio_file.read()
-        b64 = base64.b64encode(audio_bytes).decode()
-        audio_html = f"""
-            <audio autoplay>
-            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
-            </audio>
-        """
-        st.components.v1.html(audio_html, height=0)
-
-def edge_tts(text, voice="en-GB-RyanNeural"):
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            task = loop.create_task(generate_edge_tts(text, voice))
-            filename = loop.run_until_complete(task)
-        else:
-            filename = loop.run_until_complete(generate_edge_tts(text, voice))
-
-        play_audio(filename)
-        os.remove(filename)
-
-    except Exception as e:
-        st.warning(f"TTS failed: {e}")
-
+# --- Text-to-Speech ---
+def browser_tts(text):
+    import html
+    escaped = html.escape(text).replace("\n", " ")
+    components.html(f"""
+        <script>
+        const msg = new SpeechSynthesisUtterance("{escaped}");
+        msg.lang = 'en-GB';
+        msg.rate = 1;
+        msg.pitch = 1.2;
+        window.speechSynthesis.speak(msg);
+        </script>
+    """, height=0)
 
 # --- Chat Display ---
 chat_container = st.container()
@@ -225,10 +201,16 @@ if submitted and user_input.strip():
         st.session_state.history.append({'role': 'model', 'parts': [model_response]})
 
         if enable_voice:
-            edge_tts(model_response)
+            browser_tts(model_response)
 
         st.rerun()
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
+
+
+
+
+
 
