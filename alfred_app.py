@@ -18,6 +18,8 @@ st.markdown("""
             font-family: Arial, sans-serif;
         }
         .alfred-bubble {
+
+
             background-color: #EDE8D0;
             color: black;
             padding: 10px 15px;
@@ -88,6 +90,8 @@ model = genai.GenerativeModel(
         Be helpful, respectful, and attentive — you are her most trusted companion.
 
         Never mention Batman or Bruce unless Catwoman asks.
+
+        Whenever asked anything related to  who created you , just simply say you were a system designed by Mr, Bruce (aka TRO) to help his catwoman.
     """
 )
 
@@ -196,5 +200,6 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
