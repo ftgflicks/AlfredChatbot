@@ -148,26 +148,37 @@ with chat_container:
             st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
 
 # --- Custom Textarea JS: Enter to Send, Shift+Enter for newline ---
+# --- Custom Textarea JS: Enter to Send, Shift+Enter for newline ---
 components.html("""
 <script>
-const streamlitInput = window.parent.document.querySelector('textarea');
-if (streamlitInput) {
-    streamlitInput.addEventListener("keydown", function(event) {
-        if (event.key === "Enter" && !event.shiftKey && !event.ctrlKey) {
-            event.preventDefault();
-            streamlitInput.blur();
-            const buttons = window.parent.document.querySelectorAll('button');
-            for (const b of buttons) {
-                if (b.innerText === "Send") {
-                    b.click();
-                    break;
+(function() {
+    const checkInterval = setInterval(() => {
+        const textarea = window.parent.document.querySelector("textarea");
+        if (!textarea) return;
+
+        if (textarea._hasCustomListener) return;
+        textarea._hasCustomListener = true;
+
+        textarea.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" && !event.shiftKey && !event.ctrlKey) {
+                event.preventDefault();
+                textarea.blur();
+                const buttons = window.parent.document.querySelectorAll('button');
+                for (const b of buttons) {
+                    if (b.innerText.trim().toLowerCase() === "send") {
+                        b.click();
+                        break;
+                    }
                 }
             }
-        }
-    });
-}
+        });
+
+        clearInterval(checkInterval);
+    }, 300);
+})();
 </script>
 """, height=0)
+
 
 # --- Input Form ---
 with st.form(key="input_form", clear_on_submit=True):
@@ -207,6 +218,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
