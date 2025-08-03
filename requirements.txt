@@ -1,17 +1,7 @@
 streamlit
 google-generativeai
 pyttsx3
-replicate
-pdfplumber
-python-docx
-pandas
-transformers
-exifread
-requests
-pillow
-numpy
-plotly
-matplotlib
+edge-tts
 
 
 
