@@ -71,9 +71,15 @@ st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 # --- Mode Toggles ---
 col1, col2 = st.columns(2)
 with col1:
-    st.session_state.creative_mode = st.toggle("🎨 Creative Mode", value=st.session_state.get("creative_mode", False))
+    st.toggle("🎨 Creative Mode", key="creative_mode")
 with col2:
-    st.session_state.math_mode = st.toggle("🧮 Maths Help", value=st.session_state.get("math_mode", False))
+    st.toggle("🧮 Maths Help", key="math_mode")
+
+if st.session_state.get("creative_mode"):
+    st.session_state.math_mode = False
+elif st.session_state.get("math_mode"):
+    st.session_state.creative_mode = False
+
 
 
 # --- Gemini Configuration ---
@@ -88,10 +94,7 @@ generation_config = {
     "response_mime_type": "text/plain",
 }
 
-if st.session_state.get("creative_mode"):
-    st.session_state.math_mode = False
-elif st.session_state.get("math_mode"):
-    st.session_state.creative_mode = False
+
 # Adjust values based on toggle
 
 
@@ -259,6 +262,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
