@@ -89,12 +89,14 @@ generation_config = {
 }
 
 # Adjust values based on toggle
-if st.session_state.get("creative_mode") == True:
+if creative_mode:
     generation_config["temperature"] = 1.4
     generation_config["top_p"] = 0.95
-elif st.session_state.get("math_mode") == True:
+    
+elif math_mode:
     generation_config["temperature"] = 0.2
     generation_config["top_p"] = 0.7
+
 
 
 # --- Model Initialization ---
@@ -231,5 +233,6 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
