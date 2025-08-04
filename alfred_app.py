@@ -92,10 +92,20 @@ generation_config = {
 if creative_mode:
     generation_config["temperature"] = 1.4
     generation_config["top_p"] = 0.95
-    
+    system_prompt = (
+        "You are Alfred, a helpful and patient mathematics tutor. "
+        "You assist users by breaking down complex problems, explaining step-by-step, "
+        "and helping them understand key math concepts. "
+        "Speak in a calm, clear, and supportive tone."
+)
 elif math_mode:
     generation_config["temperature"] = 0.2
     generation_config["top_p"] = 0.7
+    system_prompt = (
+        "You are Alfred, a creative assistant skilled in brainstorming, idea generation, "
+        "and offering unique perspectives. You help users explore ideas for writing, research, "
+        "or any kind of creative or strategic thinking. "
+        "Your tone is curious, imaginative, and encouraging."
 
 
 
@@ -233,6 +243,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
