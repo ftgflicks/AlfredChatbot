@@ -218,9 +218,28 @@ components.html("""
 """, height=0)
 
 # --- Input Form ---
-with st.form(key="input_form", clear_on_submit=True):
-    user_input = st.text_area("You:", height=50, placeholder="Ask Alfred something...")
-    submitted = st.form_submit_button("Send")
+# --- Sticky Input Form at Bottom ---
+components.html("""
+<style>
+.fixed-input {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+</style>
+<div class="fixed-input" id="fixed-form-anchor"></div>
+""", height=0)
+
+with st.container():
+    with st.form(key="input_form", clear_on_submit=True):
+        user_input = st.text_area("You:", height=50, placeholder="Ask Alfred something...", label_visibility="collapsed")
+        submitted = st.form_submit_button("Send")
+
 
 # --- Handle Submission ---
 if submitted and user_input.strip():
@@ -258,7 +277,8 @@ if submitted and user_input.strip():
 
 
 
-
+# Add bottom padding so chat bubbles don’t hide behind input box
+st.markdown("<div style='height: 120px;'></div>", unsafe_allow_html=True)
 
 
 
