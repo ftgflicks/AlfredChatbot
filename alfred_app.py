@@ -106,7 +106,7 @@ if creative_mode:
 elif math_mode:
     generation_config["temperature"] = 0.2
     generation_config["top_p"] = 0.7
-   model = genai.GenerativeModel(
+    model = genai.GenerativeModel(
         model_name="gemini-2.0-flash-exp",
         generation_config=generation_config,
         system_instruction="""
@@ -252,6 +252,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
