@@ -71,9 +71,9 @@ st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 # --- Mode Toggles ---
 col1, col2 = st.columns(2)
 with col1:
-    creative_mode = st.toggle("🎨 Creative Mode", value=False)
+    st.session_state.creative_mode = st.toggle("🎨 Creative Mode", value=st.session_state.get("creative_mode", False))
 with col2:
-    math_mode = st.toggle("🧮 Maths Help", value=False)
+    st.session_state.math_mode = st.toggle("🧮 Maths Help", value=st.session_state.get("math_mode", False))
 
 
 # --- Gemini Configuration ---
@@ -89,7 +89,7 @@ generation_config = {
 }
 
 # Adjust values based on toggle
-if creative_mode:
+if st.session_state.get("creative_mode"):
     generation_config["temperature"] = 1.4
     generation_config["top_p"] = 0.95
     model = genai.GenerativeModel(
@@ -103,7 +103,7 @@ if creative_mode:
         """
     )
 
-elif math_mode:
+elif st.session_state.get("math_mode"):
     generation_config["temperature"] = 0.2
     generation_config["top_p"] = 0.7
     model = genai.GenerativeModel(
@@ -252,6 +252,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
