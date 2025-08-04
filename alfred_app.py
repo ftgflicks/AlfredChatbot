@@ -57,7 +57,7 @@ st.markdown("""
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
-            opacity: 0.1;
+            opacity: 0.09;
             z-index: 0;
             pointer-events: none;
         }
@@ -186,60 +186,41 @@ with chat_container:
             st.markdown('<div class="bubble-header">Alfred:</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
 
-# --- Sticky Input Form at Bottom (Working + Integrated) ---
+# --- Custom Textarea JS ---
 components.html("""
-<style>
-.fixed-input-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-}
-.fixed-input-container textarea {
-    width: 100%;
-    border-radius: 1rem;
-    padding: 0.75rem;
-    font-size: 1rem;
-    resize: none;
-    border: 1px solid #ccc;
-}
-.fixed-input-container button {
-    margin-top: 0.5rem;
-    float: right;
-    background-color: #d4af37;
-    color: black;
-    border: none;
-    padding: 0.4rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-}
-</style>
-<div class="fixed-input-container">
-  <form onsubmit="window.parent.postMessage({ type: 'submit-form' }, '*'); return false;">
-    <textarea id="alfred_input" rows="2" placeholder="Ask Alfred something..."></textarea>
-    <button type="submit">Send</button>
-  </form>
-</div>
 <script>
-window.addEventListener("message", (event) => {
-  if (event.data.type === "submit-form") {
-    const inputBox = window.parent.document.querySelector('iframe[srcdoc*="Ask Alfred something"]')?.contentDocument?.querySelector("textarea");
-    const realInput = window.parent.document.querySelector("textarea");
-    if (inputBox && realInput) {
-      realInput.value = inputBox.value;
-      const submitButton = window.parent.document.querySelector("button[kind=primary]");
-      if (submitButton) submitButton.click();
-    }
-  }
-});
+(function() {
+    const checkInterval = setInterval(() => {
+        const textarea = window.parent.document.querySelector("textarea");
+        if (!textarea) return;
+
+        if (textarea._hasCustomListener) return;
+        textarea._hasCustomListener = true;
+
+        textarea.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" && !event.shiftKey && !event.ctrlKey) {
+                event.preventDefault();
+                textarea.blur();
+                const buttons = window.parent.document.querySelectorAll('button');
+                for (const b of buttons) {
+                    if (b.innerText.trim().toLowerCase() === "send") {
+                        b.click();
+                        break;
+                    }
+                }
+            }
+        });
+
+        clearInterval(checkInterval);
+    }, 300);
+})();
 </script>
-""", height=160)
+""", height=0)
 
-
+# --- Input Form ---
+with st.form(key="input_form", clear_on_submit=True):
+    user_input = st.text_area("You:", height=50, placeholder="Ask Alfred something...")
+    submitted = st.form_submit_button("Send")
 
 # --- Handle Submission ---
 if submitted and user_input.strip():
@@ -276,9 +257,6 @@ if submitted and user_input.strip():
         st.error(f"An error occurred: {e}")
 
 
-
-# Add bottom padding so chat bubbles don’t hide behind input box
-st.markdown("<div style='height: 120px;'></div>", unsafe_allow_html=True)
 
 
 
