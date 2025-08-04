@@ -89,7 +89,7 @@ generation_config = {
 
 # Adjust values based on toggle
 if creative_mode:
-    generation_config["temperature"] = 1.3
+    generation_config["temperature"] = 1.4
     generation_config["top_p"] = 0.95
 elif math_mode:
     generation_config["temperature"] = 0.2
@@ -229,3 +229,4 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
