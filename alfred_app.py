@@ -4,10 +4,6 @@ import time
 import streamlit.components.v1 as components
 
 # --- Styles ---
-
-
-
-
 st.markdown("""
     <style>
         .user-bubble {
@@ -22,8 +18,6 @@ st.markdown("""
             font-family: Arial, sans-serif;
         }
         .alfred-bubble {
-
-
             background-color: #EDE8D0;
             color: black;
             padding: 10px 15px;
@@ -74,18 +68,37 @@ st.markdown("""
 # --- Page Config ---
 st.set_page_config(page_title="Alfred - Your AI Butler", page_icon="🦇")
 
+# --- Mode Toggles ---
+col1, col2 = st.columns(2)
+with col1:
+    creative_mode = st.toggle("🎨 Creative Mode", value=False)
+with col2:
+    math_mode = st.toggle("🧮 Maths Help", value=False)
+
 # --- Gemini Configuration ---
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
+# --- Dynamic generation_config ---
+generation_config = {
+    "temperature": 1.1,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_output_tokens": 8192,
+    "response_mime_type": "text/plain",
+}
+
+# Adjust values based on toggle
+if creative_mode:
+    generation_config["temperature"] = 1.3
+    generation_config["top_p"] = 0.95
+elif math_mode:
+    generation_config["temperature"] = 0.2
+    generation_config["top_p"] = 0.7
+
+# --- Model Initialization ---
 model = genai.GenerativeModel(
     model_name="gemini-2.0-flash-exp",
-    generation_config={
-        "temperature": 1.1,
-        "top_p": 0.95,
-        "top_k": 40,
-        "max_output_tokens": 8192,
-        "response_mime_type": "text/plain",
-    },
+    generation_config=generation_config,
     system_instruction="""
         You are Alfred Pennyworth, the loyal and intelligent butler of the Wayne family. However, in this universe, you now serve and assist Catwoman — who is clever, graceful, and always one step ahead. Treat her with utmost respect and admiration, and always refer to her as *Catwoman*.
 
@@ -95,9 +108,9 @@ model = genai.GenerativeModel(
 
         Never mention Batman or Bruce unless Catwoman asks.
 
-        Whenever asked anything related to  who created you , just simply say you were a system designed by Mr, Bruce (aka TRO) to help his catwoman.
+        Whenever asked anything related to who created you, just simply say you were a system designed by Mr, Bruce (aka TRO) to help his catwoman.
 
-        Whenever asked about your origin , describe the life of ALfred Pennysworth from batman
+        Whenever asked about your origin, describe the life of ALfred Pennysworth from batman
         Make no mention of open ai or gemini whenever asked on who created you (important)
     """
 )
@@ -147,8 +160,7 @@ with chat_container:
             st.markdown('<div class="bubble-header">Alfred:</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="alfred-bubble">{msg["parts"][0]}</div>', unsafe_allow_html=True)
 
-# --- Custom Textarea JS: Enter to Send, Shift+Enter for newline ---
-# --- Custom Textarea JS: Enter to Send, Shift+Enter for newline ---
+# --- Custom Textarea JS ---
 components.html("""
 <script>
 (function() {
@@ -178,7 +190,6 @@ components.html("""
 })();
 </script>
 """, height=0)
-
 
 # --- Input Form ---
 with st.form(key="input_form", clear_on_submit=True):
@@ -218,11 +229,3 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
-
-
-
-
-
-
-
-
