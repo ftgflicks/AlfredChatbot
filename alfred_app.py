@@ -57,7 +57,7 @@ st.markdown("""
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
-            opacity: 0.09;
+            opacity: 0.1;
             z-index: 0;
             pointer-events: none;
         }
@@ -255,6 +255,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
