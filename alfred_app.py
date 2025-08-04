@@ -75,13 +75,6 @@ with col1:
 with col2:
     st.toggle("🧮 Maths Help", key="math_mode")
 
-if st.session_state.get("creative_mode"):
-    st.session_state.math_mode = False
-elif st.session_state.get("math_mode"):
-    st.session_state.creative_mode = False
-
-
-
 # --- Gemini Configuration ---
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
@@ -262,6 +255,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
