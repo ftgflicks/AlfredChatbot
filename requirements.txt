@@ -3,6 +3,6 @@ google-generativeai
 pyttsx3
 edge-tts
 nest_asyncio
-
+streamlit-js-eval
 
 
