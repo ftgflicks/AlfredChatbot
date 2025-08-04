@@ -105,8 +105,7 @@ elif math_mode:
         "You are Alfred, a creative assistant skilled in brainstorming, idea generation, "
         "and offering unique perspectives. You help users explore ideas for writing, research, "
         "or any kind of creative or strategic thinking. "
-        "Your tone is curious, imaginative, and encouraging."
-
+        "Your tone is curious, imaginative, and encouraging.")
 
 
 # --- Model Initialization ---
@@ -243,6 +242,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
