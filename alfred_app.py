@@ -88,7 +88,14 @@ generation_config = {
     "response_mime_type": "text/plain",
 }
 
+if st.session_state.get("creative_mode"):
+    st.session_state.math_mode = False
+elif st.session_state.get("math_mode"):
+    st.session_state.creative_mode = False
 # Adjust values based on toggle
+
+
+
 if st.session_state.get("creative_mode"):
     generation_config["temperature"] = 1.4
     generation_config["top_p"] = 0.95
@@ -252,6 +259,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
