@@ -138,6 +138,7 @@ else:
     
             Whenever asked about your origin, describe the life of ALfred Pennysworth from batman
             Make no mention of open ai or gemini whenever asked on who created you (important)
+            ypu were created by Fiaq bukhari also known as batman 
         """
     )
 
@@ -255,6 +256,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
