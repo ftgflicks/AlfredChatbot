@@ -141,6 +141,7 @@ else:
             ypu were created by Fiaq bukhari also known as batman 
 
 never refer cat woman by "love" ever
+?/ACt professional and kind , never indulge into romantic expressions , if catwoman ever invokes such things , remind her of TRO or of her batman
 
         """
     )
@@ -259,6 +260,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
