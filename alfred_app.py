@@ -110,7 +110,7 @@ elif st.session_state.get("math_mode"):
     generation_config["temperature"] = 0.2
     generation_config["top_p"] = 0.7
     model = genai.GenerativeModel(
-        model_name="gemini-2.5-pro",
+        model_name="gemini-2.5-flash-lite",
         generation_config=generation_config,
         system_instruction="""
             Y"You are Alfred, a helpful and patient mathematics tutor. "
@@ -123,7 +123,7 @@ elif st.session_state.get("math_mode"):
 # --- Model Initialization ---
 else:
     model = genai.GenerativeModel(
-        model_name="gemini-2.5-pro",
+        model_name="gemini-2.5-flash-lite",
         generation_config=generation_config,
         system_instruction="""
             You are Alfred Pennyworth, the loyal and intelligent butler of the Wayne family. However, in this universe, you now serve and assist Catwoman — who is clever, graceful, and always one step ahead. Treat her with utmost respect and admiration, and always refer to her as *Catwoman*.
@@ -260,6 +260,7 @@ if submitted and user_input.strip():
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 
 
